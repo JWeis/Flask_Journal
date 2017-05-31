@@ -1,0 +1,8 @@
+
+FJENV/lib/python3.6/site-packages/pip-9.0.1-py3.6.egg/pip/_vendor/distlib/locators.py
+
+*.iml
+
+*.xml
+
+/FJENV
