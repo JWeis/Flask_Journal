@@ -1,0 +1,34 @@
+{% macro render_field(field) %}
+    <div class="feild">
+        {% if field.errors %}
+            {% for error in field.errors %}
+                <div class="notification error">{{error}}</div>
+            {% endfor %}
+        {% endif %}
+        {% if field.type != 'DateField' %}
+            <label for={{field.label.text}} > {{field.label.text}}</label>
+            {{field}}<br>
+        {% else %}
+            <label for={{field.label.text}}> {{field.label.text}}</label>
+            {{field(type='date')}}<br>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+<!--
+<label for="title"> Title</label>
+<input id="title" type="text" name="title"><br>
+<label for="date">Date</label>
+
+<input id="date" type="date" name="date"><br>
+<label for="time-spent"> Time Spent</label>
+
+<input id="time-spent" type="text" name="timeSpent"><br>
+<label for="what-i-learned">What I Learned</label>
+
+<textarea id="what-i-learned" rows="5" name="whatILearned"></textarea>
+<label for="resources-to-remember">Resources to Remember</label>
+
+<textarea id="resources-to-remember" rows="5" name="ResourcesToRemember"></textarea>
+
+-->

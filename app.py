@@ -42,8 +42,64 @@ def after_request(response):
 
 @app.route('/')
 def index():
+    template = 'index.html'
     entries = models.Entry.select().limit(100)
-    return render_template('entries.html', entries=entries)
+    return render_template(template, entries=entries)
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    template = 'login.html'
+    form = forms.LoginForm()
+    if form.validate_on_submit():
+        try:
+            user = models.User.get(models.User.email == form.email.data)
+        except models.DoesNotExist:
+            flash("Your email or password doesn't match", "error")
+        else:
+            if check_password_hash(user.password, form.password.data):
+                login_user(user)
+                flash("You are now logged in!", "succes")
+                return redirect(url_for('index'))
+            else:
+                flash("Your email or password doesn't match!")
+    return render_template(template, form=form)
+
+
+@app.route('/logout', methods=['GET','POST'])
+def logout():
+    logout_user()
+    flash("Your have been logged out!", "success")
+    return redirect(url_for('index'))
+
+
+@app.route('/new-entry', methods=['GET', 'POST'])
+@login_required
+def new_entry():
+    template = 'new.html'
+    form = forms.EntryForm()
+    if form.validate_on_submit():
+        models.Entry.create(
+            user=g.user._get_current_object(),
+            title = form.title.data.strip(),
+            content = form.content.data.strip(),
+            date = form.date.data,
+            resources = form.resources.data.strip(),
+            time_spent = form.time_spent.data,
+            tags = form.tags.data.strip()
+        )
+        flash("You entry has been created!", "success")
+        return redirect(url_for('index'))
+    return render_template(template, form=form)
+
+
+@app.route('/entry/<int:id>')
+def view_entry(id):
+    template = 'detail.html'
+    entries = models.Entry.select().where(models.Entry.id == id)
+    if entries.count() == 0:
+        abort(404)
+    return render_template(template, entries=entries)
 
 
 if __name__ == '__main__':

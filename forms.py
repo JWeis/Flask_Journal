@@ -1,7 +1,7 @@
 import datetime
 from flask_wtf import Form
 from wtforms import (StringField, PasswordField, DateField,
-                     IntegerField, TextAreaField, )
+                     IntegerField, TextAreaField )
 from wtforms.validators import (DataRequired, ValidationError, Email,
                                 Length, EqualTo, Regexp)
 
@@ -56,9 +56,8 @@ class LoginForm(Form):
 class EntryForm(Form):
     title = StringField('Title', validators=[DataRequired()])
     content = TextAreaField('Entry', validators=[DataRequired()])
-    date = DateField('Entry Date', validators=[DataRequired()],
-                     default=datetime.datetime.now().strftime('%m/%d/%Y'))
-    resourses = StringField('Resourses Remember')
+    date = DateField('Entry Date', validators=[DataRequired()])
+    resources = TextAreaField('Resourses Remember')
     time_spent = IntegerField('Time Spent in Minutes',
                               validators=[DataRequired()])
     tags = StringField('Tags')
