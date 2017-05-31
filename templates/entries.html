@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<section>
+    <div class="container">
+        <div class="entry-list">
+            {% if entries.count() > 0 %}
+                {% for entry in entries %}
+                <article>
+                    <h2><a href="#">{{entry.title}}</a></h2>
+                    <time datetime="{{entry.date..strftime('%m/%d/%Y')}}">{{entry.date}}</time>
+                </article>
+                {% endfor %}
+            {% else %}
+                <h1>No Entries Yet</h1>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

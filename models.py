@@ -47,6 +47,6 @@ class Entry(Model):
 
 
 def initialize():
-    DATABASE.connect()
+    DATABASE.get_conn()
     DATABASE.create_tables([User, Entry], safe=True)
     DATABASE.close()
