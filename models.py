@@ -39,6 +39,7 @@ class Entry(Model):
     date = DateTimeField(default=datetime.datetime.now)
     resources = CharField()
     time_spent = IntegerField()
+    tags = CharField()
 
     class Meta:
         db = DATABASE
