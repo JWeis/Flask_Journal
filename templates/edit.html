@@ -1,49 +1,56 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>MyJournal</title>
-        <link href="https://fonts.googleapis.com/css?family=Cousine:400" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/css?family=Work+Sans:600" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link rel="stylesheet" href="../static/css/normalize.css">
-        <link rel="stylesheet" href="../static/css/site.css">
-    </head>
-    <body>
-        <header>
-            <div class="container">
-                <div class="site-header">
-                    <a class="logo" href="index.html"><i class="material-icons">library_books</i></a>
-                    <a class="button icon-right" href="new.html"><span>New Entry</span> <i class="material-icons">add</i></a>
+{% extends "layout.html" %}
+
+{% block content %}
+{% for entry in entries %}
+<section>
+    <div class="container">
+        <div class="new-entry">
+            <h2>Edit Entry: {{entry.title}}</h2>
+            <form action="", method="POST" id="entry-form">
+                {{ form.hidden_tag() }}
+                {% for field in form %}
+                    <div class="feild">
+                    {% if field.errors %}
+                        {% for error in field.errors %}
+                            <div class="notification error">{{error}}</div>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if field.label.text == 'Title' %}
+                        <p>Current Title: {{entry.title}}</p>
+                        {{field(placeholder='Update Title Here')}}
+                    {% endif %}
+
+                    {% if field.label.text == 'Entry' %}
+                    <p>Current Entry: {{entry.content}}</p>
+                    {{field(placeholder='Update Entry Here')}}
+                    {% endif %}
+
+                    {% if field.label.text == 'Entry Date' %}
+                    <p>Current Date: {{entry.date}}</p>
+                    {{field(type='date')}}
+                    {% endif %}
+
+                    {% if field.label.text == 'Resourses Remember' %}
+                    <p>Current Resource: {{entry.resource}}</p>
+                    {{field(placeholder='Update Resource Here')}}
+                    {% endif %}
+
+                    {% if field.label.text == 'Time Spent in Minutes' %}
+                    <p>Current Time Spent: {{entry.time_spent}}</p>
+                    {{field(placeholder='Update Time Spent Here')}}
+                    {% endif %}
+
+                    {% if field.label.text == 'Tags' %}
+                    <p>Current Tags: {{entry.tags}}</p>
+                    {{field(placeholder='Update Tags Here')}}
+                    {% endif %}
                 </div>
-            </div>
-        </header>
-        <section>
-            <div class="container">
-                <div class="edit-entry">
-                    <h2>Edit Entry</h2>
-                    <form>
-                        <label for="title"> Title</label>
-                        <input id="title" type="text" name="title"><br>
-                        <label for="date">Date</label>
-                        <input id="date" type="date" name="date"><br>
-                        <label for="time-spent"> Time Spent</label>
-                        <input id="time-spent" type="text" name="timeSpent"><br>
-                        <label for="what-i-learned">What I Learned</label>
-                        <textarea id="what-i-learned" rows="5" name="whatILearned"></textarea>
-                        <label for="resources-to-remember">Resources to Remember</label>
-                        <textarea id="resources-to-remember" rows="5" name="ResourcesToRemember"></textarea>
-                        <input type="submit" value="Publish Entry" class="button">
-                        <a href="#" class="button button-secondary">Cancel</a>
-                    </form>
-                </div>
-            </div>
-        </section>
-        <footer>
-            <div>
-                &copy; MyJournal
-            </div>
-        </footer>
-    </body>
-</html>
+                {% endfor %}
+                <input type="submit" value="Update Entry" class="button">
+            </form>
+        </div>
+    </div>
+</section>
+{% endfor %}
+{% endblock %}

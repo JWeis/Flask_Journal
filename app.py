@@ -93,7 +93,7 @@ def new_entry():
     return render_template(template, form=form)
 
 
-@app.route('/entry/<int:id>')
+@app.route('/entries/<int:id>')
 def view_entry(id):
     template = 'detail.html'
     entries = models.Entry.select().where(models.Entry.id == id)
@@ -101,6 +101,26 @@ def view_entry(id):
         abort(404)
     return render_template(template, entries=entries)
 
+
+@app.route('/entries/edit/<int:id>', methods=['GET','POST'])
+@login_required
+def edit_entry(id):
+    template = 'edit.html'
+    form = forms.EntryForm()
+    entries = models.Entry.select().where(models.Entry.id == id)
+    if form.validate_on_submit():
+        update = models.Entry.update(
+                title=form.title.data.strip(),
+                content=form.content.data.strip(),
+                date=form.date.data,
+                resources=form.resources.data.strip(),
+                time_spent=form.time_spent.data,
+                tags=form.tags.data.strip()
+            ).where(models.Entry.id == id)
+        update.execute()
+        flash("Your entry has been updated", "success")
+        return redirect(url_for('view_entry', id=id))
+    return render_template(template, form=form, entries=entries)
 
 if __name__ == '__main__':
     models.initialize()

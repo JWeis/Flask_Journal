@@ -1,9 +1,10 @@
 {% extends "layout.html" %}
 
 {% block content %}
+{% for entry in entries %}
+<section>
 <div class="container">
     <div class="entry-list single">
-        {% for entry in entries %}
         <article>
             <h1>{{entry.title}}</h1>
             <time datetime="#">{{entry.date}}</time>
@@ -25,11 +26,12 @@
                 </ul>
             </div>
         </article>
-        {% endfor %}
+
     </div>
 </div>
 <div class="edit">
-    <p><a href="#">Edit Entry</a></p>
+    <p><a href="{{url_for('edit_entry', id=entry.id)}}">Edit Entry</a></p>
 </div>
+{% endfor %}
 </section>
 {% endblock %}
