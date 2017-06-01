@@ -17,33 +17,50 @@
                     {% endif %}
 
                     {% if field.label.text == 'Title' %}
-                        <p>Current Title: {{entry.title}}</p>
-                        {{field(placeholder='Update Title Here')}}
+                        <label for={{field.label.text}} > {{field.label.text}}</label>
+                        {{ field(value=entry.title)}}
                     {% endif %}
 
-                    {% if field.label.text == 'Entry' %}
-                    <p>Current Entry: {{entry.content}}</p>
-                    {{field(placeholder='Update Entry Here')}}
+                    {% if field.label.text == 'What I Learned' %}
+                        <label for="entry" > {{field.label.text}}</label>
+                        <textarea name="entry" id="edit-entry" cols="30" rows="10" spellcheck="true" style="z-index: auto; position: relative; line-height: 32.4px; font-size: 18px; transition: none; background: none 0% 0% / auto repeat scroll padding-box border-box rgb(255, 255, 255);">{{entry.content}}</textarea>
+                        <p>Original Entry: {{entry.content}}</p>
                     {% endif %}
 
                     {% if field.label.text == 'Entry Date' %}
-                    <p>Current Date: {{entry.date}}</p>
-                    {{field(type='date')}}
+                        <label for={{field.label.text}} > {{field.label.text}}</label>
+                        {{field(value=entry.date, type='date')}}
                     {% endif %}
 
-                    {% if field.label.text == 'Resourses Remember' %}
-                    <p>Current Resource: {{entry.resource}}</p>
-                    {{field(placeholder='Update Resource Here')}}
+                    {% if field.label.text == 'Resource 1' %}
+                    <label for={{field.label.text}} > {{field.label.text}}</label>
+                    {{field(value=entry.resource_text1)}}
+                    <label for={{field.label.text}} > Link 1</label>
+                    {{field(value=entry.resource_link1)}}
+                    {% endif %}
+
+                    {% if field.label.text == 'Resource 2' %}
+                    <label for={{field.label.text}} > {{field.label.text}}</label>
+                    {{field(value=entry.resource_text1)}}
+                    <label for={{field.label.text}} > Link 2</label>
+                    {{field(value=entry.resource_link2)}}
+                    {% endif %}
+
+                    {% if field.label.text == 'Resource 3' %}
+                    <label for={{field.label.text}} > {{field.label.text}}</label>
+                    {{field(value=entry.resource_text1)}}
+                    <label for={{field.label.text}} > Link 3</label>
+                    {{field(value=entry.resource_link3)}}
                     {% endif %}
 
                     {% if field.label.text == 'Time Spent in Minutes' %}
-                    <p>Current Time Spent: {{entry.time_spent}}</p>
-                    {{field(placeholder='Update Time Spent Here')}}
+                    <label for={{field.label.text}} > {{field.label.text}}</label>
+                    {{field(value=entry.time_spent)}}
                     {% endif %}
 
                     {% if field.label.text == 'Tags' %}
-                    <p>Current Tags: {{entry.tags}}</p>
-                    {{field(placeholder='Update Tags Here')}}
+                    <label for={{field.label.text}} > {{field.label.text}}</label>
+                    {{field(value=entry.tags)}}
                     {% endif %}
                 </div>
                 {% endfor %}

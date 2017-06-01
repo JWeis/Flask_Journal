@@ -1,5 +1,12 @@
 {% extends "layout.html" %}
 
+resources_text1=form.resources_text1.data.strip(),
+            resources_text2 = form.resources_text2.data.strip(),
+            resources_text3 = form.resources_text3.data.strip(),
+            resource_link1 = form.resource_link1.data.strip(),
+            resource_link2 = form.resource_link2.data.strip(),
+            resource_link3 = form.resource_link3.data.strip(),
+
 {% block content %}
 {% for entry in entries %}
 <section>
@@ -19,18 +26,32 @@
             <div class="entry">
                 <h3>Resources to Remember:</h3>
                 <ul>
-                    <li><a href="">Lorem ipsum dolor sit amet</a></li>
-                    <li><a href="">Cras accumsan cursus ante, non dapibus tempor</a></li>
-                    <li>Nunc ut rhoncus felis, vel tincidunt neque</li>
-                    <li><a href="">Ipsum dolor sit amet</a></li>
+                    {% if entry.resources_text1 %}
+                        <li><a href="{{entry.resource_link1}}" target="_blank">{{entry.resources_text1}}</a></li>
+                    {% endif %}
+                    {% if entry.resources_text2 %}
+                        <li><a href="{{entry.resource_link2}}" target="_blank">{{entry.resources_text2}}</a></li>
+                    {% endif %}
+                    {% if entry.resources_text3 %}
+                        <li><a href="{{entry.resource_link3}}" target="_blank">{{entry.resources_text3}}</a></li>
+                    {% endif %}
                 </ul>
             </div>
+            {% if entry.tags %}
+            <div class="entry">
+                <he>Tags</he>
+                <ul>
+                    <li><a href="{{url_for('view_by_tag', tag=entry.tags)}}"> {{entry.tags}}</a></li>
+                </ul>
+            </div>
+            {% endif %}
         </article>
 
     </div>
 </div>
-<div class="edit">
+<div class="edit">{{entry.id}}
     <p><a href="{{url_for('edit_entry', id=entry.id)}}">Edit Entry</a></p>
+    <p><a href="{{url_for('delete_entry', id=entry.id)}}">Delete Entry</a></p>
 </div>
 {% endfor %}
 </section>

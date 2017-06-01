@@ -41,6 +41,7 @@ def after_request(response):
 
 
 @app.route('/')
+@app.route('/entries')
 def index():
     template = 'index.html'
     entries = models.Entry.select().limit(100)
@@ -84,13 +85,26 @@ def new_entry():
             title = form.title.data.strip(),
             content = form.content.data.strip(),
             date = form.date.data,
-            resources = form.resources.data.strip(),
+            resources_text1=form.resources_text1.data.strip(),
+            resources_text2 = form.resources_text2.data.strip(),
+            resources_text3 = form.resources_text3.data.strip(),
+            resource_link1 = form.resource_link1.data.strip(),
+            resource_link2 = form.resource_link2.data.strip(),
+            resource_link3 = form.resource_link3.data.strip(),
             time_spent = form.time_spent.data,
             tags = form.tags.data.strip()
         )
         flash("You entry has been created!", "success")
         return redirect(url_for('index'))
     return render_template(template, form=form)
+
+
+@app.route('/delete/<int:id>')
+def delete_entry(id):
+    entries = models.Entry.delete().where(models.Entry.id == id)
+    entries.execute()
+    flash("Entry Deleted")
+    return redirect(url_for('index'))
 
 
 @app.route('/entries/<int:id>')
@@ -113,7 +127,12 @@ def edit_entry(id):
                 title=form.title.data.strip(),
                 content=form.content.data.strip(),
                 date=form.date.data,
-                resources=form.resources.data.strip(),
+                resources_text1=form.resources_text1.data.strip(),
+                resources_text2=form.resources_text2.data.strip(),
+                resources_text3=form.resources_text3.data.strip(),
+                resource_link1=form.resource_link1.data.strip(),
+                resource_link2=form.resource_link2.data.strip(),
+                resource_link3=form.resource_link3.data.strip(),
                 time_spent=form.time_spent.data,
                 tags=form.tags.data.strip()
             ).where(models.Entry.id == id)
@@ -121,6 +140,12 @@ def edit_entry(id):
         flash("Your entry has been updated", "success")
         return redirect(url_for('view_entry', id=id))
     return render_template(template, form=form, entries=entries)
+
+@app.route('/entries/<tag>')
+def view_by_tag(tag=None):
+    template = 'index.html'
+    entries = models.Entry.select().where(models.Entry.tags**tag)
+    return render_template(template, entries=entries)
 
 if __name__ == '__main__':
     models.initialize()

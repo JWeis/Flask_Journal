@@ -11,7 +11,7 @@ class User(UserMixin, Model):
     username = CharField(max_length=20, unique=True)
     email = CharField(max_length=100)
     password = CharField(max_length=15)
-    joined_on = DateTimeField(default=datetime.datetime.now)
+    joined_on = DateField(default=datetime.datetime.now)
     is_admin = BooleanField(default=False)
 
     class Meta:
@@ -36,8 +36,13 @@ class Entry(Model):
     user = ForeignKeyField(rel_model=User, related_name='entries')
     title = CharField()
     content = TextField()
-    date = DateTimeField(default=datetime.datetime.now)
-    resources = CharField()
+    date = DateField(default=datetime.datetime.now)
+    resources_text1 = CharField()
+    resources_text2 = CharField()
+    resources_text3 = CharField()
+    resource_link1 = CharField()
+    resource_link2 = CharField()
+    resource_link3 = CharField()
     time_spent = IntegerField()
     tags = CharField()
 

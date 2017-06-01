@@ -12,6 +12,8 @@
                 <article>
                     <h2><a href="{{url_for('view_entry', id=entry.id)}}">{{entry.title}}</a></h2>
                     <time datetime="#">{{entry.date}}</time>
+                    <br>
+                    <small>Tags: {{entry.tags}}</small>
                 </article>
                 {% endfor %}
             {% else %}
