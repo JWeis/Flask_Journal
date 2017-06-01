@@ -54,7 +54,7 @@ class LoginForm(Form):
 
 class EntryForm(Form):
     title = StringField('Title', validators=[DataRequired()])
-    content = TextAreaField('What I Learned', validators=[DataRequired()], default='')
+    content = TextAreaField('What I Learned')
     date = DateField('Entry Date', validators=[DataRequired()],)
     resources_text1 = StringField('Resource 1')
     resource_link1 = StringField('Link 1')

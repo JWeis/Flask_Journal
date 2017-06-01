@@ -42,6 +42,7 @@ def after_request(response):
 
 @app.route('/')
 @app.route('/entries')
+@login_required
 def index():
     template = 'index.html'
     entries = models.Entry.select().limit(100)

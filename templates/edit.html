@@ -23,7 +23,7 @@
 
                     {% if field.label.text == 'What I Learned' %}
                         <label for="entry" > {{field.label.text}}</label>
-                        <textarea name="entry" id="edit-entry" cols="30" rows="10" spellcheck="true" style="z-index: auto; position: relative; line-height: 32.4px; font-size: 18px; transition: none; background: none 0% 0% / auto repeat scroll padding-box border-box rgb(255, 255, 255);">{{entry.content}}</textarea>
+                        {{ field }}
                         <p>Original Entry: {{entry.content}}</p>
                     {% endif %}
 
@@ -69,5 +69,14 @@
         </div>
     </div>
 </section>
+<script>
+    var content =  '{{entry.content}}';
+    function replace() {
+        var empty = document.getElementById('content');
+        empty.innerHTML = content;
+    }
+replace()
+
+</script>
 {% endfor %}
 {% endblock %}

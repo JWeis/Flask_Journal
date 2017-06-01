@@ -3,11 +3,12 @@
 {% block content %}
 <section>
     <div class="container">
-        <div class="welcom">
+        <div class="welcome">
             <h1>Welcome {{current_user.username}}</h1>
         </div>
         <div class="entry-list">
             {% if entries.count() > 0 %}
+            <h3 style="text-align: center">Here are your Journal Entries</h3><br>
                 {% for entry in entries %}
                 <article>
                     <h2><a href="{{url_for('view_entry', id=entry.id)}}">{{entry.title}}</a></h2>
